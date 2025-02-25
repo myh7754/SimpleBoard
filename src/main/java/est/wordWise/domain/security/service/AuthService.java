@@ -19,4 +19,6 @@ public class AuthService {
         req.setPassword(passwordEncoder.encode(req.getPassword()));
         memberRepository.save(Member.toEntity(req));
     }
+
+
 }

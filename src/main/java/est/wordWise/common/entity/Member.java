@@ -26,7 +26,7 @@ public class Member {
     private String provider;
     private Boolean deleted;
 
-    private LocalDateTime createTime;
+    private LocalDateTime createAt;
 
     @Builder
     private Member(String nickname, String email,  String password, Auth role, String provider ) {
@@ -36,7 +36,7 @@ public class Member {
         this.role = Auth.MEMBER;
         this.provider = provider;
         this.deleted = false;
-        this.createTime = LocalDateTime.now();
+        this.createAt = LocalDateTime.now();
     }
 
     public static Member toEntity(SignupReq req) {
@@ -46,7 +46,7 @@ public class Member {
         member.password = req.password;
         member.deleted = false;
         member.role = Auth.MEMBER;
-        member.createTime = LocalDateTime.now();
+        member.createAt = LocalDateTime.now();
         member.provider = "provider";
         return member;
     }
