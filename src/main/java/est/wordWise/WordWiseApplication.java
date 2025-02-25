@@ -1,13 +1,13 @@
-package est.defaultboard;
+package est.wordwise;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class DefaultBoardApplication {
+public class WordWiseApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(DefaultBoardApplication.class, args);
+        SpringApplication.run(WordWiseApplication.class, args);
     }
 
 }
