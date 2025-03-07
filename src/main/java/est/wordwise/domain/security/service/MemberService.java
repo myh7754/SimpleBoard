@@ -27,6 +27,11 @@ public class MemberService extends DefaultOAuth2UserService {
                 () -> new MemberNotFoundException(MEMBER_NOT_FOUND_ERROR)
         );
     }
+    public Member getMemberByEmail(String email) {
+        return memberRepository.findByEmail(email).orElseThrow(
+                () -> new MemberNotFoundException(MEMBER_NOT_FOUND_ERROR)
+        );
+    }
 
     public Boolean checkEmail(String email) {
         Optional<Member> memberOptional = memberRepository.findByEmail(email);
@@ -42,10 +47,10 @@ public class MemberService extends DefaultOAuth2UserService {
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
 
         OAuth2User oAuth2User = super.loadUser(userRequest);
-        log.info("OAuth2User {}" , oAuth2User);
         String provider = userRequest.getClientRegistration().getRegistrationId().toUpperCase();
 
         MemberDetails memberDetails = MemberDetailsFactory.create(provider, oAuth2User);
+
 
         Optional<Member> memberOptional = memberRepository.findByEmail(memberDetails.getEmail());
         Member findMember = memberOptional.orElseGet(
@@ -61,10 +66,16 @@ public class MemberService extends DefaultOAuth2UserService {
         );
 
         if ( findMember.getProvider().equals(provider) ) {
+            memberDetails.setId(findMember.getId());
             memberDetails.setRole(String.valueOf(findMember.getRole()));
             return memberDetails;
         } else {
             throw new RuntimeException();
         }
+    }
+
+    public MemberDetails loadMemberDetailById(Long id) {
+        Member findMember = getMemberById(id);
+        return MemberDetails.from(findMember);
     }
 }

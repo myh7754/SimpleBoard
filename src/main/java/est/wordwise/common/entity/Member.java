@@ -14,15 +14,20 @@ import java.time.LocalDateTime;
 @Getter
 public class Member {
     @Id
+    @Column(name = "member_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false, unique = true)
     private String nickname;
+    @Column(nullable = false, unique = true)
     private String email;
     private String password;
 
+
     @Enumerated(EnumType.STRING)
     private Auth role;
+
     private String provider;
     private Boolean deleted;
 

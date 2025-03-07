@@ -1,8 +1,9 @@
 package est.wordwise.domain.security.dto;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import est.wordwise.common.entity.Member;
+import jakarta.persistence.Id;
+import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -12,7 +13,11 @@ import java.util.List;
 import java.util.Map;
 
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Slf4j
 public class MemberDetails implements OAuth2User {
+    @Setter
+    private Long id;
     private String name;
     private String email;
 
@@ -20,6 +25,15 @@ public class MemberDetails implements OAuth2User {
     private String role;
 
     private Map<String, Object> attributes;
+
+    public static MemberDetails from(Member member) {
+        MemberDetails memberDetail = new MemberDetails();
+        memberDetail.id = member.getId();
+        memberDetail.name = member.getNickname();
+        memberDetail.email = member.getEmail();
+        memberDetail.role = member.getRole().toString();
+        return memberDetail;
+    }
 
     @Builder
     public MemberDetails(String name, String email,Map<String, Object> attributes) {

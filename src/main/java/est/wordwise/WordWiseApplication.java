@@ -7,7 +7,6 @@ import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 @SpringBootApplication
 @ConfigurationPropertiesScan
 public class WordWiseApplication {
-
     public static void main(String[] args) {
         SpringApplication.run(WordWiseApplication.class, args);
     }

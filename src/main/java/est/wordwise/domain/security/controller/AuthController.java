@@ -1,12 +1,20 @@
 package est.wordwise.domain.security.controller;
 
+import est.wordwise.domain.security.dto.KeyPair;
+import est.wordwise.domain.security.dto.SigninReq;
 import est.wordwise.domain.security.dto.SignupReq;
+import est.wordwise.domain.security.repository.RefreshTokenRepositoryAdapter;
+import est.wordwise.domain.security.repository.TokenRepository;
 import est.wordwise.domain.security.service.AuthService;
 import est.wordwise.domain.security.service.JwtTokenProvider;
 import est.wordwise.domain.security.service.MemberService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -18,7 +26,7 @@ import java.util.Map;
 public class AuthController {
     private final AuthService authService;
     private final MemberService memberService;
-    private final JwtTokenProvider jwtTokenProvider;
+    private final RefreshTokenRepositoryAdapter refreshTokenRepositoryAdapter;
 
     @PostMapping("/signup")
     public String signup(@RequestBody SignupReq req) throws Exception {
@@ -38,6 +46,39 @@ public class AuthController {
         log.info("received checkNicknameInfo: {}", req);
         String nickname = req.get("nickname");
         return ResponseEntity.ok().body(memberService.checkNickname(nickname));
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody SigninReq req, HttpServletResponse res) throws Exception {
+        log.info("received loginInfo: {}", req);
+        try {
+            authService.login(req,res);
+            log.info("login success");
+            return ResponseEntity.status(HttpStatus.OK).build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+    }
+
+    @PostMapping("/refresh/logout")
+    public ResponseEntity<?> logout(@CookieValue(name = "refreshToken", required = false) String refreshToken) throws Exception {
+        return authService.logout(refreshToken);
+    }
+//        tokenRepository.appendBlackList();
+
+
+    @PostMapping("/check-auth")
+    public ResponseEntity<?> checkAuthentication(Authentication authentication) throws Exception {
+        log.info("확인요청");
+        return authService.loginCheck(authentication);
+    }
+
+    @PostMapping("/refresh")
+    public ResponseEntity<?> refreshToken(
+            @CookieValue(name = "refreshToken", required = false) String refreshToken, HttpServletResponse res
+    ) throws Exception {
+        log.info("재발급 요청");
+        return authService.reIssueToken(refreshToken,res);
     }
 
 }
