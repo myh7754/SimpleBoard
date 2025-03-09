@@ -22,7 +22,7 @@ import java.util.Map;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-@RequestMapping("/api")
+@RequestMapping("/api/auth")
 public class AuthController {
     private final AuthService authService;
     private final MemberService memberService;
@@ -61,8 +61,10 @@ public class AuthController {
     }
 
     @PostMapping("/refresh/logout")
-    public ResponseEntity<?> logout(@CookieValue(name = "refreshToken", required = false) String refreshToken) throws Exception {
-        return authService.logout(refreshToken);
+    public ResponseEntity<?> logout(@CookieValue(name = "refreshToken", required = false) String refreshToken
+        ,HttpServletResponse response
+    ) throws Exception {
+        return authService.logout(refreshToken, response);
     }
 //        tokenRepository.appendBlackList();
 

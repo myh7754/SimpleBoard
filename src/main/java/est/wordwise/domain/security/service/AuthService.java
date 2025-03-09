@@ -91,11 +91,32 @@ public class AuthService {
         }
     }
 
-    public ResponseEntity<?> logout(String refreshToken) {
+    public ResponseEntity<?> logout(String refreshToken, HttpServletResponse response) {
+        log.info("로그아웃 요청 {}",refreshToken);
+
         try {
             refreshTokenRepositoryAdapter.appendBlackList(refreshToken);
+            ResponseCookie refreshCookie = ResponseCookie.from("refreshToken","")
+                    .maxAge(0)
+                    .httpOnly(true)
+                    .secure(false)
+                    .path("/api/auth/refresh")
+                    .sameSite("Lax")
+                    .build();
+            ResponseCookie accessCookie = ResponseCookie.from("accessToken","")
+                    .maxAge(0)
+                    .httpOnly(true)
+                    .secure(false)
+                    .path("/")
+                    .sameSite("Lax")
+                    .build();
+            log.info("로그아웃 쿠키 {}",accessCookie.toString());
+            response.addHeader("Set-Cookie", accessCookie.toString());
+            response.addHeader("Set-Cookie", refreshCookie.toString());
+
             return ResponseEntity.ok().build();
         } catch (Exception e) {
+            log.info("로그아웃 에러터짐");
             return ResponseEntity.badRequest().build();
         }
     }

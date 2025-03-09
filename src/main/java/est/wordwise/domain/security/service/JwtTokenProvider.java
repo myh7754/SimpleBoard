@@ -20,6 +20,7 @@ import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
+import java.time.Duration;
 import java.util.Date;
 import java.util.Optional;
 
@@ -52,7 +53,7 @@ public class JwtTokenProvider {
             path = "/";
             expired = 1500L; // 15분
         } else {
-            path = "/api/refresh";
+            path = "/api/auth/refresh";
             expired = 6000L; // 1시간
         }
 
@@ -73,12 +74,12 @@ public class JwtTokenProvider {
     }
 
     //생성
-    private String issue(Member member, Long validTime) {
+    private String issue(Member member, Duration validTime) {
         return Jwts.builder()
                 .subject(member.getId().toString())
                 .claim("role", member.getRole())
                 .issuedAt(new Date())
-                .expiration(new Date(new Date().getTime() + validTime))
+                .expiration(new Date(new Date().getTime() + validTime.toMillis()))
                 .signWith(getSecretKey(), Jwts.SIG.HS256)
                 .compact();
     }

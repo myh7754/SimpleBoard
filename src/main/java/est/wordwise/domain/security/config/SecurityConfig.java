@@ -34,7 +34,7 @@ public class SecurityConfig {
                                 .userInfoEndpoint(userInfo -> userInfo.userService(memberService))
                 )
                 .authorizeHttpRequests(auth-> { auth
-                        .requestMatchers("/", "/api/login","/api/signup","/oauth2/authorization","/api/check-auth","/api/refresh").permitAll()
+                        .requestMatchers("/","/oauth2/authorization/**","/api/auth/**").permitAll()
                          // reqMatchers는 허락받는 url , .permitAll은 url의 허락해줄 권한 역할
                         .anyRequest().authenticated(); // 위에서 정의되지 않은 모든 요청은 인증된 사용자만 접근 가능
                 })

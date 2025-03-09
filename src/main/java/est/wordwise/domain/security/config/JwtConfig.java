@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+import java.time.Duration;
+
 @Getter
 @RequiredArgsConstructor
 @ConfigurationProperties(prefix = "custom.jwt")
@@ -15,8 +17,8 @@ public class JwtConfig {
     @RequiredArgsConstructor
     @Getter
     public static class Validation {
-        private final Long access;
-        private final Long refresh;
+        private final Duration access;
+        private final Duration refresh;
     }
 
     @RequiredArgsConstructor
