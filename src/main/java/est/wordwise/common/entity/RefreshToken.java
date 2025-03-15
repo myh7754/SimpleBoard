@@ -10,8 +10,8 @@ import java.time.LocalDateTime;
 public class RefreshToken {
 
     @Id
-    @Column(name = "refresh_token_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "refresh_token_id")
     private Long id;
 
     @Column(unique = true, nullable = false)

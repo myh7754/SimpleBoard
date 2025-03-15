@@ -6,6 +6,7 @@ import est.wordwise.common.repository.MemberRepository;
 import est.wordwise.domain.security.dto.MemberDetails;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
@@ -31,6 +32,11 @@ public class MemberService extends DefaultOAuth2UserService {
         return memberRepository.findByEmail(email).orElseThrow(
                 () -> new MemberNotFoundException(MEMBER_NOT_FOUND_ERROR)
         );
+    }
+
+    public Member getLoginMember(Authentication authentication) {
+        MemberDetails memberDetails = (MemberDetails) authentication.getPrincipal();
+        return getMemberById(memberDetails.getId());
     }
 
     public Boolean checkEmail(String email) {

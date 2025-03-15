@@ -1,6 +1,6 @@
 package est.wordwise.common.entity;
 
-import est.wordwise.domain.security.dto.SignupReq;
+import est.wordwise.domain.security.dto.SignupRequest;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -44,7 +44,7 @@ public class Member {
         this.createAt = LocalDateTime.now();
     }
 
-    public static Member toEntity(SignupReq req) {
+    public static Member toEntity(SignupRequest req) {
         Member member = new Member();
         member.nickname = req.nickname;
         member.email = req.email;

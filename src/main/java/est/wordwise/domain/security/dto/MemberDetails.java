@@ -56,4 +56,6 @@ public class MemberDetails implements OAuth2User {
     public String getName() {
         return name;
     }
+
+
 }

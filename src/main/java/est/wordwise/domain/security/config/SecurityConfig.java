@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -34,7 +35,12 @@ public class SecurityConfig {
                                 .userInfoEndpoint(userInfo -> userInfo.userService(memberService))
                 )
                 .authorizeHttpRequests(auth-> { auth
-                        .requestMatchers("/","/oauth2/authorization/**","/api/auth/**").permitAll()
+                        .requestMatchers("/","/oauth2/authorization/**","/api/auth/**","/api/posts/**").permitAll()
+                        .requestMatchers(
+                                HttpMethod.GET,
+                                "/api/posts/**/comments",
+                                "/api/posts"
+                        ).permitAll()
                          // reqMatchers는 허락받는 url , .permitAll은 url의 허락해줄 권한 역할
                         .anyRequest().authenticated(); // 위에서 정의되지 않은 모든 요청은 인증된 사용자만 접근 가능
                 })

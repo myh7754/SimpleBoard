@@ -4,14 +4,8 @@ import est.wordwise.common.entity.Member;
 import est.wordwise.common.entity.RefreshToken;
 import est.wordwise.common.exception.InvalidUsernamePasswordException;
 import est.wordwise.common.repository.MemberRepository;
-import est.wordwise.domain.security.dto.KeyPair;
-import est.wordwise.domain.security.dto.SigninReq;
-import est.wordwise.domain.security.dto.SignupReq;
-import est.wordwise.domain.security.dto.TokenBody;
-import est.wordwise.domain.security.repository.RefreshTokenRepositoryAdapter;
+import est.wordwise.domain.security.dto.*;
 import est.wordwise.domain.security.repository.TokenRepository;
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,13 +33,13 @@ public class AuthService {
     private final TokenRepository refreshTokenRepositoryAdapter;
 
     @Transactional
-    public void signup(SignupReq req) throws Exception {
+    public void signup(SignupRequest req) throws Exception {
         req.setPassword(passwordEncoder.encode(req.getPassword()));
         memberRepository.save(Member.toEntity(req));
     }
 
     @Transactional
-    public void login(SigninReq req, HttpServletResponse response) {
+    public void login(SigninRequest req, HttpServletResponse response) {
         Member member = memberService.getMemberByEmail(req.getEmail());
         if (!passwordEncoder.matches(req.getPassword(), member.getPassword())) {
             throw new InvalidUsernamePasswordException(INVALID_USERNAME_PASSWORD_ERROR);
@@ -67,11 +61,13 @@ public class AuthService {
             response.put("isAuthenticated", false);
             return ResponseEntity.ok(response);
         }
-        log.info("로그인 되어있는 정보 확인 : {}", authentication);
+        log.info("로그인 되어있는 정보 확인 : {}", authentication.getPrincipal());
         response.put("isAuthenticated", true);
-        response.put("user", authentication.getPrincipal());
+        MemberDetails memberDetails =(MemberDetails) authentication.getPrincipal();
+        response.put("user", memberDetails);
         return ResponseEntity.ok(response);
     }
+
 
     public ResponseEntity<?> reIssueToken(String refreshToken, HttpServletResponse response) {
 

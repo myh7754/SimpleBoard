@@ -1,14 +1,10 @@
 package est.wordwise.domain.security.controller;
 
-import est.wordwise.domain.security.dto.KeyPair;
-import est.wordwise.domain.security.dto.SigninReq;
-import est.wordwise.domain.security.dto.SignupReq;
+import est.wordwise.domain.security.dto.SigninRequest;
+import est.wordwise.domain.security.dto.SignupRequest;
 import est.wordwise.domain.security.repository.RefreshTokenRepositoryAdapter;
-import est.wordwise.domain.security.repository.TokenRepository;
 import est.wordwise.domain.security.service.AuthService;
-import est.wordwise.domain.security.service.JwtTokenProvider;
 import est.wordwise.domain.security.service.MemberService;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +25,7 @@ public class AuthController {
     private final RefreshTokenRepositoryAdapter refreshTokenRepositoryAdapter;
 
     @PostMapping("/signup")
-    public String signup(@RequestBody SignupReq req) throws Exception {
+    public String signup(@RequestBody SignupRequest req) throws Exception {
         authService.signup(req);
         return "ok";
     }
@@ -49,7 +45,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody SigninReq req, HttpServletResponse res) throws Exception {
+    public ResponseEntity<?> login(@RequestBody SigninRequest req, HttpServletResponse res) throws Exception {
         log.info("received loginInfo: {}", req);
         try {
             authService.login(req,res);
