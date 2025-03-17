@@ -49,10 +49,9 @@ public class PostServiceImpl implements PostService {
 
     @Override
     @Transactional
-    public ResponseEntity<?> save(CreatePostRequest post, Authentication authentication) {
+    public void save(CreatePostRequest post, Authentication authentication) {
         Member loginMember = memberService.getLoginMember(authentication);
-        postRepository.save(Post.toEntity(post, loginMember));
-        return ResponseEntity.ok().build();
+        Post save = postRepository.save(Post.toEntity(post, loginMember));
     }
 
     @Override

@@ -10,7 +10,7 @@ public interface PostService {
     public Post getPostById(Long postId);
     public PostResponse readPost(Long postId);
     public Page<PostsResponse> readPosts(int page, int size);
-    public ResponseEntity<?> save(CreatePostRequest post, Authentication authentication);
+    public void save(CreatePostRequest post, Authentication authentication);
     public ResponseEntity<?> update(UpdatePostRequest post);
     public ResponseEntity<?> delete(DeletePostRequest id);
 }

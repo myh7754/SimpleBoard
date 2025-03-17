@@ -1,15 +1,17 @@
 package est.wordwise.domain.comment.controller;
 
 
+import est.wordwise.common.entity.Comment;
 import est.wordwise.domain.comment.dto.CommentReq;
 import est.wordwise.domain.comment.dto.CommentResponse;
 import est.wordwise.domain.comment.dto.CommentUpdateReq;
 import est.wordwise.domain.comment.service.CommentsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import javax.xml.stream.events.Comment;
 import java.util.List;
 
 @RestController
@@ -19,10 +21,10 @@ import java.util.List;
 public class CommentController {
     private final CommentsService commentsService;
     @GetMapping
-    public String getComment(@PathVariable Long postId) {
+    public ResponseEntity<?> getComment(@PathVariable Long postId) {
         List<CommentResponse> commentResponses = commentsService.readCommentsByPostId(postId);
-        log.info("getComment: {}", commentResponses);
-        return "ok";
+        log.info("댓글 목록 {}", commentResponses);
+        return ResponseEntity.ok(commentResponses);
     }
 
     @PostMapping
@@ -38,9 +40,10 @@ public class CommentController {
         return "ok";
     }
 
-    @DeleteMapping("/comments/{id}")
-    public String deleteComment(@PathVariable Long id) {
-        commentsService.deleteComment(id);
+    @DeleteMapping("/{commentId}")
+    @PreAuthorize("@memberAuthService.CommentAuthCheck(authentication,#commentId)")
+    public String deleteComment(@PathVariable Long commentId) {
+        commentsService.deleteComment(commentId);
         return "ok";
     }
 }

@@ -16,6 +16,7 @@ import est.wordwise.domain.post.service.PostService;
 import est.wordwise.domain.security.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,14 +40,16 @@ public class CommentsServiceImpl implements CommentsService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Comment> findCommentsByPostId(Long postId) {
-        return commentsRepository.findByPostId(postId);
+        List<Comment> byPostId = commentsRepository.findByPostIdAndParentIsNull(postId);
+        return byPostId;
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<CommentResponse> readCommentsByPostId(Long postId) {
         List<Comment> commentsByPostId = findCommentsByPostId(postId);
-        log.info( "왜 안됨? {}", commentsByPostId);
         return commentsByPostId.stream()
                 .map(CommentResponse::new)
                 .collect(Collectors.toList());
@@ -65,8 +68,9 @@ public class CommentsServiceImpl implements CommentsService {
 
     @Override
     @Transactional
-    public Comment deleteComment(Long id) {
+    public Comment deleteComment(Long commentId) {
         // 나중에 소프트 delete or 그냥 삭제할지 결졍되면 구현
+        commentsRepository.deleteById(commentId);
         return null;
     }
 

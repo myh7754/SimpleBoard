@@ -51,10 +51,10 @@ public class JwtTokenProvider {
         Long expired;
         if(key.equals("accessToken")) {
             path = "/";
-            expired = 1500L; // 15분
+            expired = 60L; // 1분
         } else {
             path = "/api/auth/refresh";
-            expired = 6000L; // 1시간
+            expired = 600L; // 10분
         }
 
         return ResponseCookie.from(key, token)
@@ -94,6 +94,7 @@ public class JwtTokenProvider {
         Optional<RefreshToken> refreshTokenOptional = refreshTokenRepositoryAdapter.findvalidRefTokenByMemberId(memberId);
         return refreshTokenOptional.orElse(null);
     }
+
     public RefreshToken validateRefreshToken(String token) {
         Optional<RefreshToken> refreshTokenOptional = refreshTokenRepositoryAdapter.findValidRefTokenByToken(token);
         return refreshTokenOptional.orElse(null);

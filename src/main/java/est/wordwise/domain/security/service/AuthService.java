@@ -61,10 +61,10 @@ public class AuthService {
             response.put("isAuthenticated", false);
             return ResponseEntity.ok(response);
         }
-        log.info("로그인 되어있는 정보 확인 : {}", authentication.getPrincipal());
         response.put("isAuthenticated", true);
         MemberDetails memberDetails =(MemberDetails) authentication.getPrincipal();
         response.put("user", memberDetails);
+        log.info("로그인 되어있는 정보 확인 : {}", authentication);
         return ResponseEntity.ok(response);
     }
 
@@ -75,7 +75,7 @@ public class AuthService {
         log.info("현재 검증된 refreshToken: {}", validateRefreshToken);
         if (validateRefreshToken == null) {
             log.info("검증된게 없다 오류 발생");
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            return ResponseEntity.status(HttpStatus.OK).build();
         } else {
             log.info("오류 안나고 검증된 깔끔한 토큰이다");
             TokenBody tokenBody = jwtTokenProvider.parseJwt(refreshToken);

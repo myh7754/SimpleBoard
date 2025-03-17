@@ -24,7 +24,7 @@ public class Post {
     private Member author;
     private LocalDateTime createAt;
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post",  cascade = CascadeType.REMOVE)
     private List<Comment> comments;
 
 

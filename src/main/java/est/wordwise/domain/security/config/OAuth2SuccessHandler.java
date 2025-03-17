@@ -72,23 +72,9 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         // 리프레시 토큰 쿠키 설정
         ResponseCookie refreshCookie = jwtTokenProvider.cookieToken("refreshToken", refresh);
         response.addHeader("Set-Cookie", refreshCookie.toString());
-        log.info("oauth2 accessToken : {}", accessToken);
-        log.info("oauth2 refreshToken : {}", refresh);
-        log.info("REFRESHCOOKIE {}", refreshCookie);
 
         getRedirectStrategy().sendRedirect(request,response,targetUrl);
 
     }
 
 }
-
-//        params.put("access", accessToken);
-//        params.put("refresh", refresh);
-//        String targetUrl = genUrlStr(params);
-
-//    private String genUrlStr(HashMap<String, String> params) {
-//        return UriComponentsBuilder.fromUri(URI.create(baseUrl))
-//                .queryParam("access", params.get("access"))
-//                .queryParam("refresh", params.get("refresh"))
-//                .build().toUriString();
-//    }
