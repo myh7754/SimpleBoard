@@ -13,4 +13,6 @@ public interface PostService {
     public void save(CreatePostRequest post, Authentication authentication);
     public ResponseEntity<?> update(UpdatePostRequest post);
     public ResponseEntity<?> delete(DeletePostRequest id);
+    public void increaseViewCount(Long postId);
+
 }

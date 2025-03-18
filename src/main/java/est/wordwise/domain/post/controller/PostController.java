@@ -23,6 +23,7 @@ public class PostController {
     @GetMapping("/{id}")
     public ResponseEntity<?> postDetail(@PathVariable Long id) {
         PostResponse responseEntity = postService.readPost(id);
+
         return ResponseEntity.ok(responseEntity);
     }
 

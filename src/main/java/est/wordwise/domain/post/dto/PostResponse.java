@@ -17,6 +17,7 @@ public class PostResponse {
     public LocalDateTime createAt;
     public String board;
     public List<CommentResponse> comments;
+    public Long likeCount;
 
 
     public static PostResponse from(Post post) {
@@ -25,6 +26,7 @@ public class PostResponse {
         postResponse.content = post.getContent();
         postResponse.createAt = post.getCreateAt();
         postResponse.author = post.getAuthor().getNickname();
+        postResponse.likeCount = post.getLikeCount();
         return postResponse;
     }
 }

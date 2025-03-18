@@ -1,7 +1,6 @@
 package est.wordwise.domain.comment.controller;
 
 
-import est.wordwise.common.entity.Comment;
 import est.wordwise.domain.comment.dto.CommentReq;
 import est.wordwise.domain.comment.dto.CommentResponse;
 import est.wordwise.domain.comment.dto.CommentUpdateReq;

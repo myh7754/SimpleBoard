@@ -38,6 +38,7 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(auth-> { auth
                         .requestMatchers("/","/oauth2/authorization/**","/api/auth/**","/api/posts/**").permitAll()
+                        .requestMatchers("/auth/member").hasAnyAuthority("ADMIN", "MANAGER", "MEMBER")
                         .requestMatchers(
                                 HttpMethod.GET,
                                 "/api/posts/**/comments",

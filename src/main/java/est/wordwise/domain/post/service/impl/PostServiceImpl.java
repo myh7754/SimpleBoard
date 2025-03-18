@@ -3,6 +3,7 @@ package est.wordwise.domain.post.service.impl;
 import est.wordwise.common.entity.Member;
 import est.wordwise.common.entity.Post;
 import est.wordwise.common.exception.PostNotFoundException;
+import est.wordwise.domain.comment.service.CommentsService;
 import est.wordwise.domain.post.dto.*;
 import est.wordwise.domain.post.repository.PostRepository;
 import est.wordwise.domain.post.service.PostService;
@@ -37,7 +38,8 @@ public class PostServiceImpl implements PostService {
     @Override
     public PostResponse readPost(Long postId) {
         Post postById = getPostById(postId);
-        return PostResponse.from(postById);
+        PostResponse from = PostResponse.from(postById);
+        return from;
     }
 
     @Override
@@ -62,5 +64,13 @@ public class PostServiceImpl implements PostService {
     @Override
     public ResponseEntity<?> delete(DeletePostRequest id) {
         return null;
+    }
+
+    @Override
+    @Transactional
+    public void increaseViewCount(Long postId) {
+        postRepository.findById(postId).ifPresent(post -> {
+            post.setViewCount(post.getViewCount() + 1);
+        });
     }
 }

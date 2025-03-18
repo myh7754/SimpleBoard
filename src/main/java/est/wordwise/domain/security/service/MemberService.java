@@ -39,6 +39,10 @@ public class MemberService extends DefaultOAuth2UserService {
         return getMemberById(memberDetails.getId());
     }
 
+    public MemberDetails getMemberDetails(Authentication authentication) {
+        return (MemberDetails) authentication.getPrincipal();
+    }
+
     public Boolean checkEmail(String email) {
         Optional<Member> memberOptional = memberRepository.findByEmail(email);
         return memberOptional.isEmpty();

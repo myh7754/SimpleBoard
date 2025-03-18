@@ -87,4 +87,6 @@ public class CommentsServiceImpl implements CommentsService {
         Post post = postService.getPostById(postId);
         return new MemberPostDto(member, post);
     }
+
+
 }

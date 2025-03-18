@@ -9,7 +9,9 @@ public record PostsResponse(
         String title,
         String content,
         String author,
-        LocalDateTime createdAt
+        LocalDateTime createdAt,
+        Long commentCount,
+        Long likeCount
 ) {
     public static PostsResponse from(Post post) {
         return new PostsResponse(
@@ -17,7 +19,9 @@ public record PostsResponse(
                 post.getTitle(),
                 post.getContent(),
                 post.getAuthor().getNickname(),
-                post.getCreateAt()
+                post.getCreateAt(),
+                post.getCommentCount(),
+                post.getLikeCount()
         );
     }
 }
