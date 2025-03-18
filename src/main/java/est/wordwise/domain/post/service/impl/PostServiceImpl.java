@@ -57,13 +57,18 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public ResponseEntity<?> update(UpdatePostRequest post) {
-        return null;
+    @Transactional
+    public void update(Long id, UpdatePostRequest req) {
+        postRepository.findById(id).ifPresent(post -> {
+            post.update(req);
+        });
     }
 
     @Override
-    public ResponseEntity<?> delete(DeletePostRequest id) {
-        return null;
+    public void delete(Long postId) {
+        postRepository.findById(postId).ifPresent(post -> {
+            postRepository.delete(post);
+        });
     }
 
     @Override

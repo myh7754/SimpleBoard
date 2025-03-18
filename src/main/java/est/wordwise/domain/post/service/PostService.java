@@ -11,8 +11,8 @@ public interface PostService {
     public PostResponse readPost(Long postId);
     public Page<PostsResponse> readPosts(int page, int size);
     public void save(CreatePostRequest post, Authentication authentication);
-    public ResponseEntity<?> update(UpdatePostRequest post);
-    public ResponseEntity<?> delete(DeletePostRequest id);
+    public void update(Long id, UpdatePostRequest post);
+    public void delete(Long postId);
     public void increaseViewCount(Long postId);
 
 }

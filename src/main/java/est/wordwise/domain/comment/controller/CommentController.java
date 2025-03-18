@@ -40,7 +40,7 @@ public class CommentController {
     }
 
     @DeleteMapping("/{commentId}")
-    @PreAuthorize("@memberAuthService.CommentAuthCheck(authentication,#commentId)")
+    @PreAuthorize("@memberAuthService.commentAuthCheck(authentication,#commentId)")
     public String deleteComment(@PathVariable Long commentId) {
         commentsService.deleteComment(commentId);
         return "ok";

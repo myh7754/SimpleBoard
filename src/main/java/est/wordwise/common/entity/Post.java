@@ -1,6 +1,7 @@
 package est.wordwise.common.entity;
 
 import est.wordwise.domain.post.dto.CreatePostRequest;
+import est.wordwise.domain.post.dto.UpdatePostRequest;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -57,6 +58,11 @@ public class Post {
 
     public long getLikeCount() {
         return likes.size();
+    }
+
+    public void update(UpdatePostRequest update) {
+        this.content = update.getContent();
+        this.title = update.getTitle();
     }
 
 }
