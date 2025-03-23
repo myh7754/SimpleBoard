@@ -2,8 +2,8 @@ package est.wordwise.domain.comment.dto;
 
 
 
-import est.wordwise.common.entity.Member;
-import est.wordwise.common.entity.Post;
+import est.wordwise.domain.security.entity.Member;
+import est.wordwise.domain.post.entity.Post;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

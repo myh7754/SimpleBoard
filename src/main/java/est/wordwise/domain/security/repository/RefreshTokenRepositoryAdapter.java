@@ -1,8 +1,8 @@
 package est.wordwise.domain.security.repository;
 
-import est.wordwise.common.entity.Member;
-import est.wordwise.common.entity.RefreshToken;
-import est.wordwise.common.entity.RefreshTokenBlackList;
+import est.wordwise.domain.security.entity.Member;
+import est.wordwise.domain.security.entity.RefreshToken;
+import est.wordwise.domain.security.entity.RefreshTokenBlackList;
 import est.wordwise.common.exception.RefreshTokenNotFoundException;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;

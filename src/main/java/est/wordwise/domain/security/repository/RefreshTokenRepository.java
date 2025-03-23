@@ -1,6 +1,6 @@
 package est.wordwise.domain.security.repository;
 
-import est.wordwise.common.entity.RefreshToken;
+import est.wordwise.domain.security.entity.RefreshToken;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

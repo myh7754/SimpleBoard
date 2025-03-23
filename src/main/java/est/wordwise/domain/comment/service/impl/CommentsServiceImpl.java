@@ -2,9 +2,9 @@ package est.wordwise.domain.comment.service.impl;
 
 
 
-import est.wordwise.common.entity.Comment;
-import est.wordwise.common.entity.Member;
-import est.wordwise.common.entity.Post;
+import est.wordwise.domain.comment.entity.Comment;
+import est.wordwise.domain.security.entity.Member;
+import est.wordwise.domain.post.entity.Post;
 import est.wordwise.common.exception.CommentNotFoundException;
 import est.wordwise.domain.comment.dto.CommentReq;
 import est.wordwise.domain.comment.dto.CommentResponse;
@@ -16,7 +16,6 @@ import est.wordwise.domain.post.service.PostService;
 import est.wordwise.domain.security.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

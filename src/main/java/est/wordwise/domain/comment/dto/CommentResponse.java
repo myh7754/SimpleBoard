@@ -1,6 +1,6 @@
 package est.wordwise.domain.comment.dto;
 
-import est.wordwise.common.entity.Comment;
+import est.wordwise.domain.comment.entity.Comment;
 import lombok.Data;
 
 import java.time.LocalDateTime;

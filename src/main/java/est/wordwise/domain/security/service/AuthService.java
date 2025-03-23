@@ -1,7 +1,7 @@
 package est.wordwise.domain.security.service;
 
-import est.wordwise.common.entity.Member;
-import est.wordwise.common.entity.RefreshToken;
+import est.wordwise.domain.security.entity.Member;
+import est.wordwise.domain.security.entity.RefreshToken;
 import est.wordwise.common.exception.InvalidUsernamePasswordException;
 import est.wordwise.common.repository.MemberRepository;
 import est.wordwise.domain.security.dto.*;

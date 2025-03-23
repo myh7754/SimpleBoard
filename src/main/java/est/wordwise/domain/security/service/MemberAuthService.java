@@ -1,8 +1,8 @@
 package est.wordwise.domain.security.service;
 
-import est.wordwise.common.entity.Comment;
-import est.wordwise.common.entity.Member;
-import est.wordwise.common.entity.Post;
+import est.wordwise.domain.comment.entity.Comment;
+import est.wordwise.domain.security.entity.Member;
+import est.wordwise.domain.post.entity.Post;
 import est.wordwise.domain.comment.service.CommentsService;
 import est.wordwise.domain.post.service.PostService;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +24,7 @@ public class MemberAuthService {
         Member loginMember = memberService.getLoginMember(authentication);
         return  loginMember.getId().equals(commentsById.getMember().getId());
     }
-
+    // 게시글 작성자와 로그인된 사용자가 같다면 true 다르다면 false
     public boolean postAuthCheck(Authentication authentication, Long postId) {
         Post postById = postService.getPostById(postId);
         Member loginMember = memberService.getLoginMember(authentication);

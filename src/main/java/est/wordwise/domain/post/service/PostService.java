@@ -1,9 +1,8 @@
 package est.wordwise.domain.post.service;
 
-import est.wordwise.common.entity.Post;
+import est.wordwise.domain.post.entity.Post;
 import est.wordwise.domain.post.dto.*;
 import org.springframework.data.domain.Page;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 
 public interface PostService {

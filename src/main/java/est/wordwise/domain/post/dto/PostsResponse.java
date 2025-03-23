@@ -1,6 +1,6 @@
 package est.wordwise.domain.post.dto;
 
-import est.wordwise.common.entity.Post;
+import est.wordwise.domain.post.entity.Post;
 
 import java.time.LocalDateTime;
 

@@ -1,5 +1,6 @@
-package est.wordwise.common.entity;
+package est.wordwise.domain.security.entity;
 
+import est.wordwise.domain.chat.entity.UserChatRoom;
 import est.wordwise.domain.security.dto.SignupRequest;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -8,6 +9,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -30,6 +33,11 @@ public class Member {
 
     private String provider;
     private Boolean deleted;
+
+    // 채팅방과의 중간 테이블 매핑
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<UserChatRoom> userChatRooms = new ArrayList<>();
+
 
     private LocalDateTime createAt;
 

@@ -1,6 +1,6 @@
 package est.wordwise.domain.security.service;
 
-import est.wordwise.common.entity.Member;
+import est.wordwise.domain.security.entity.Member;
 import est.wordwise.common.exception.MemberNotFoundException;
 import est.wordwise.common.repository.MemberRepository;
 import est.wordwise.domain.security.dto.MemberDetails;
@@ -34,6 +34,12 @@ public class MemberService extends DefaultOAuth2UserService {
         );
     }
 
+    public Member getMemberByNickname(String nickname) {
+        return memberRepository.findByNickname(nickname).orElseThrow(
+                () -> new MemberNotFoundException(MEMBER_NOT_FOUND_ERROR)
+        );
+    }
+
     public Member getLoginMember(Authentication authentication) {
         MemberDetails memberDetails = (MemberDetails) authentication.getPrincipal();
         return getMemberById(memberDetails.getId());
@@ -55,12 +61,10 @@ public class MemberService extends DefaultOAuth2UserService {
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
-
         OAuth2User oAuth2User = super.loadUser(userRequest);
         String provider = userRequest.getClientRegistration().getRegistrationId().toUpperCase();
 
         MemberDetails memberDetails = MemberDetailsFactory.create(provider, oAuth2User);
-
 
         Optional<Member> memberOptional = memberRepository.findByEmail(memberDetails.getEmail());
         Member findMember = memberOptional.orElseGet(

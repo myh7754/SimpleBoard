@@ -1,5 +1,7 @@
-package est.wordwise.common.entity;
+package est.wordwise.domain.likes.entity;
 
+import est.wordwise.domain.post.entity.Post;
+import est.wordwise.domain.security.entity.Member;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;

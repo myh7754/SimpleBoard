@@ -1,6 +1,6 @@
 package est.wordwise.domain.likes.service.likeserviceImpl;
 
-import est.wordwise.common.entity.Likes;
+import est.wordwise.domain.likes.entity.Likes;
 import est.wordwise.domain.likes.repository.LikesRepository;
 import est.wordwise.domain.likes.service.LikeService;
 import est.wordwise.domain.post.service.PostService;

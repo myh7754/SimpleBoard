@@ -1,6 +1,6 @@
 package est.wordwise.domain.post.repository;
 
-import est.wordwise.common.entity.Post;
+import est.wordwise.domain.post.entity.Post;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

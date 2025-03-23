@@ -1,9 +1,8 @@
 package est.wordwise.domain.post.service.impl;
 
-import est.wordwise.common.entity.Member;
-import est.wordwise.common.entity.Post;
+import est.wordwise.domain.security.entity.Member;
+import est.wordwise.domain.post.entity.Post;
 import est.wordwise.common.exception.PostNotFoundException;
-import est.wordwise.domain.comment.service.CommentsService;
 import est.wordwise.domain.post.dto.*;
 import est.wordwise.domain.post.repository.PostRepository;
 import est.wordwise.domain.post.service.PostService;
@@ -12,12 +11,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
 
 import static est.wordwise.common.exception.ExceptionHandler.POST_NOT_FOUND_ERROR;
 

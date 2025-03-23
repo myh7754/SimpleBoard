@@ -1,7 +1,10 @@
-package est.wordwise.common.entity;
+package est.wordwise.domain.post.entity;
 
+import est.wordwise.domain.comment.entity.Comment;
+import est.wordwise.domain.likes.entity.Likes;
 import est.wordwise.domain.post.dto.CreatePostRequest;
 import est.wordwise.domain.post.dto.UpdatePostRequest;
+import est.wordwise.domain.security.entity.Member;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;

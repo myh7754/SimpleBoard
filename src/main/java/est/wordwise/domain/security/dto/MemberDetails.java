@@ -1,7 +1,6 @@
 package est.wordwise.domain.security.dto;
 
-import est.wordwise.common.entity.Member;
-import jakarta.persistence.Id;
+import est.wordwise.domain.security.entity.Member;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;

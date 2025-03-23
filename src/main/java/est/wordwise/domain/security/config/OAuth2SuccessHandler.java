@@ -1,13 +1,12 @@
 package est.wordwise.domain.security.config;
 
-import est.wordwise.common.entity.Member;
-import est.wordwise.common.entity.RefreshToken;
+import est.wordwise.domain.security.entity.Member;
+import est.wordwise.domain.security.entity.RefreshToken;
 import est.wordwise.domain.security.dto.KeyPair;
 import est.wordwise.domain.security.dto.MemberDetails;
 import est.wordwise.domain.security.service.JwtTokenProvider;
 import est.wordwise.domain.security.service.MemberService;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -18,12 +17,8 @@ import org.springframework.http.ResponseCookie;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
-import java.net.URI;
-import java.time.Duration;
-import java.util.HashMap;
 
 @Component
 @Slf4j

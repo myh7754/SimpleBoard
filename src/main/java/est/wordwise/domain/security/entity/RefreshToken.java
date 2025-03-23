@@ -1,4 +1,4 @@
-package est.wordwise.common.entity;
+package est.wordwise.domain.security.entity;
 
 import jakarta.persistence.*;
 import lombok.*;

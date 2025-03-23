@@ -1,6 +1,6 @@
 package est.wordwise.domain.comment.repository;
 
-import est.wordwise.common.entity.Comment;
+import est.wordwise.domain.comment.entity.Comment;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

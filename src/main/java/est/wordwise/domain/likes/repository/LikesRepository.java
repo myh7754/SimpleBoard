@@ -1,6 +1,6 @@
 package est.wordwise.domain.likes.repository;
 
-import est.wordwise.common.entity.Likes;
+import est.wordwise.domain.likes.entity.Likes;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

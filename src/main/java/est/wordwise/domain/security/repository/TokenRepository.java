@@ -1,8 +1,8 @@
 package est.wordwise.domain.security.repository;
 
 
-import est.wordwise.common.entity.Member;
-import est.wordwise.common.entity.RefreshToken;
+import est.wordwise.domain.security.entity.Member;
+import est.wordwise.domain.security.entity.RefreshToken;
 
 import java.util.Optional;
 

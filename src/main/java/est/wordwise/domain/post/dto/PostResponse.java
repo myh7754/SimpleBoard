@@ -1,6 +1,6 @@
 package est.wordwise.domain.post.dto;
 
-import est.wordwise.common.entity.Post;
+import est.wordwise.domain.post.entity.Post;
 import est.wordwise.domain.comment.dto.CommentResponse;
 import lombok.Data;
 import lombok.NoArgsConstructor;

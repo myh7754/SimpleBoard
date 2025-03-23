@@ -37,11 +37,11 @@ public class SecurityConfig {
                                 .userInfoEndpoint(userInfo -> userInfo.userService(memberService))
                 )
                 .authorizeHttpRequests(auth-> { auth
-                        .requestMatchers("/","/oauth2/authorization/**","/api/auth/**","/api/posts/**").permitAll()
+                        .requestMatchers("/","/oauth2/authorization/**","/api/auth/**","/api/posts/**","/ws/**").permitAll()
                         .requestMatchers("/auth/member").hasAnyAuthority("ADMIN", "MANAGER", "MEMBER")
                         .requestMatchers(
                                 HttpMethod.GET,
-                                "/api/posts/**/comments",
+                                "/api/posts/*/comments",
                                 "/api/posts"
                         ).permitAll()
                          // reqMatchers는 허락받는 url , .permitAll은 url의 허락해줄 권한 역할

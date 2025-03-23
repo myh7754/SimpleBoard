@@ -1,19 +1,16 @@
 package est.wordwise.domain.security.service;
 
-import est.wordwise.common.entity.Member;
-import est.wordwise.common.entity.RefreshToken;
+import est.wordwise.domain.security.entity.Member;
+import est.wordwise.domain.security.entity.RefreshToken;
 import est.wordwise.domain.security.config.JwtConfig;
 import est.wordwise.domain.security.dto.KeyPair;
 import est.wordwise.domain.security.dto.TokenBody;
-import est.wordwise.domain.security.repository.RefreshTokenRepository;
-import est.wordwise.domain.security.repository.RefreshTokenRepositoryAdapter;
 import est.wordwise.domain.security.repository.TokenRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseCookie;
