@@ -15,10 +15,7 @@ import est.wordwise.domain.security.entity.Member;
 import est.wordwise.domain.security.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -44,14 +41,22 @@ public class ChatServiceImpl implements ChatService {
                 ()-> new ChatRoomNotFoundException(CHAT_ROOM_FOUND_ERROR)
         );
     }
-
     @Override
-    public Page<ChatMessage> getChatMessageByChatRoomId(Long chatRoomId, int page, int size) {
+    public Slice<ChatMessage> getChatMessageByChatRoomId(Long chatRoomId, int page, int size) {
         Pageable pageRequest = PageRequest.of(page, size, Sort.by("timestamp").descending());
-        Page<Chat> byChatRoomId = chatMessageRepository.findByChatRoomId(chatRoomId, pageRequest);
+
+        Slice<Chat> byChatRoomId = chatMessageRepository.findByChatRoomIdOrderByTimestampDesc(chatRoomId, pageRequest);
 
         return byChatRoomId.map(ChatMessage::toEntity);
     }
+
+//    @Override
+//    public Page<ChatMessage> getChatMessageByChatRoomId(Long chatRoomId, int page, int size) {
+//        Pageable pageRequest = PageRequest.of(page, size, Sort.by("timestamp").descending());
+//        Page<Chat> byChatRoomId = chatMessageRepository.findByChatRoomId(chatRoomId, pageRequest);
+//
+//        return byChatRoomId.map(ChatMessage::toEntity);
+//    }
 
     // 채팅 추가
     @Override

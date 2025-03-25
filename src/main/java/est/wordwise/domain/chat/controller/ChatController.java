@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,9 @@ import org.springframework.messaging.handler.annotation.SendTo;
 
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @Slf4j
@@ -64,8 +67,11 @@ public class ChatController {
 
     ) {
         log.info("출력완료 {}", chatRoomId);
-        Page<ChatMessage> chatMessageByChatRoomId = chatService.getChatMessageByChatRoomId(chatRoomId,page,size);
-        return ResponseEntity.ok(chatMessageByChatRoomId);
+        log.info("page : {}", page);
+        log.info("size : {}", size);
+        Slice<ChatMessage> slice = chatService.getChatMessageByChatRoomId(chatRoomId,page,size);
+        log.info("slice {}", slice);
+        return ResponseEntity.ok(slice);
     }
 
 }
