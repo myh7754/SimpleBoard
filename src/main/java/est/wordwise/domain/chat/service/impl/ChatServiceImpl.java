@@ -15,11 +15,16 @@ import est.wordwise.domain.security.entity.Member;
 import est.wordwise.domain.security.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static est.wordwise.common.exception.ExceptionHandler.*;
 
@@ -38,6 +43,14 @@ public class ChatServiceImpl implements ChatService {
         return chatRoomRepository.findById(chatRoomId).orElseThrow(
                 ()-> new ChatRoomNotFoundException(CHAT_ROOM_FOUND_ERROR)
         );
+    }
+
+    @Override
+    public Page<ChatMessage> getChatMessageByChatRoomId(Long chatRoomId, int page, int size) {
+        Pageable pageRequest = PageRequest.of(page, size, Sort.by("timestamp").descending());
+        Page<Chat> byChatRoomId = chatMessageRepository.findByChatRoomId(chatRoomId, pageRequest);
+
+        return byChatRoomId.map(ChatMessage::toEntity);
     }
 
     // 채팅 추가

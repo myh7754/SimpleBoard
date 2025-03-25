@@ -5,15 +5,19 @@ import est.wordwise.domain.chat.dto.ChatRoomRequest;
 import est.wordwise.domain.chat.service.ChatService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @Slf4j
@@ -50,6 +54,18 @@ public class ChatController {
         log.info("채팅방 생성 요청 {}", chatRoomRequest);
         Long roomId = chatService.createChatRoom(chatRoomRequest);
         return ResponseEntity.ok(roomId);
+    }
+
+    @GetMapping("/api/chatroom/{chatRoomId}")
+    public ResponseEntity<?> getChatMessageByRoomId(@PathVariable Long chatRoomId,
+                                                    @RequestParam(defaultValue = "0") int page,
+                                                    @RequestParam(defaultValue = "20") int size
+//                                                    @PageableDefault(size = 20, sort = "timestamp", direction = Sort.Direction.DESC) Pageable pageable)
+
+    ) {
+        log.info("출력완료 {}", chatRoomId);
+        Page<ChatMessage> chatMessageByChatRoomId = chatService.getChatMessageByChatRoomId(chatRoomId,page,size);
+        return ResponseEntity.ok(chatMessageByChatRoomId);
     }
 
 }
