@@ -3,6 +3,7 @@ package est.wordwise.domain.chat.controller;
 import est.wordwise.domain.chat.dto.ChatMessage;
 import est.wordwise.domain.chat.dto.ChatRoomRequest;
 import est.wordwise.domain.chat.service.ChatService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -10,12 +11,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -30,10 +33,11 @@ public class ChatController {
 
     // 메시지 발행 및 저장
     @MessageMapping("/{chatRoomId}") // /chat주소로 발행된 메시지를
-    @SendTo("/sub/{chatRoomId}") // sub/chat를 구독한 사용자에게 전달
+    @SendTo({"/sub/{chatRoomId}", "/sub/chat-list"}) // sub/chat를 구독한 사용자에게 전달
     public ChatMessage sendMessage(@Payload ChatMessage chatMessage, @DestinationVariable Long chatRoomId) {
         log.info("채팅 도착 {}", chatMessage);
         log.info("채팅방 번호 {}", chatRoomId);
+
         switch (chatMessage.getMessageType()) {
             case JOIN:
                 chatMessage.setContent(chatMessage.getSender() + "님이 입장하셨습니다.");
@@ -49,6 +53,8 @@ public class ChatController {
             default:
                 log.warn("지원하지 않는 메시지 타입: {}", chatMessage.getMessageType());
         }
+
+
         return chatMessage;
     }
 
@@ -59,7 +65,13 @@ public class ChatController {
         return ResponseEntity.ok(roomId);
     }
 
-    @GetMapping("/api/chatroom/{chatRoomId}")
+    @GetMapping("/api/chatroom")
+    public ResponseEntity<?> getChatRoomByMember(Authentication authentication) {
+        return ResponseEntity.ok(chatService.getChatRoomListByMemberId(authentication));
+    }
+
+    // 채팅방 채팅 내역 출력
+    @GetMapping("/api/chatmessage/{chatRoomId}")
     public ResponseEntity<?> getChatMessageByRoomId(@PathVariable Long chatRoomId,
                                                     @RequestParam(defaultValue = "0") int page,
                                                     @RequestParam(defaultValue = "20") int size

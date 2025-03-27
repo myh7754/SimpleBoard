@@ -1,5 +1,6 @@
 package est.wordwise.domain.security.service;
 
+import est.wordwise.common.exception.RefreshTokenNotFoundException;
 import est.wordwise.domain.security.entity.Member;
 import est.wordwise.domain.security.entity.RefreshToken;
 import est.wordwise.common.exception.InvalidUsernamePasswordException;
@@ -55,7 +56,6 @@ public class AuthService {
 
     public ResponseEntity<?> loginCheck(Authentication authentication) {
         Map<String, Object> response = new HashMap<>();
-        log.info("내부 로그인 체크");
         if (authentication == null || !authentication.isAuthenticated()) {
             log.info("로그인 되어있지 않은 상태");
             response.put("isAuthenticated", false);
@@ -70,12 +70,10 @@ public class AuthService {
 
 
     public ResponseEntity<?> reIssueToken(String refreshToken, HttpServletResponse response) {
-
         RefreshToken validateRefreshToken = jwtTokenProvider.validateRefreshToken(refreshToken);
         log.info("현재 검증된 refreshToken: {}", validateRefreshToken);
         if (validateRefreshToken == null) {
-            log.info("검증된게 없다 오류 발생");
-            return ResponseEntity.status(HttpStatus.OK).build();
+            throw new RefreshTokenNotFoundException(REFRESH_TOKEN_NOT_FOUND_ERROR);
         } else {
             log.info("오류 안나고 검증된 깔끔한 토큰이다");
             TokenBody tokenBody = jwtTokenProvider.parseJwt(refreshToken);

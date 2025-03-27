@@ -45,13 +45,13 @@ public class JwtTokenProvider {
     // 토큰을 담은 쿠키 생성
     public ResponseCookie cookieToken(String key, String token) {
         String path;
-        Long expired;
+        Duration expired;
         if(key.equals("accessToken")) {
             path = "/";
-            expired = 60L; // 1분
+            expired = jwtConfig.getValidation().getAccess(); // 1분
         } else {
             path = "/api/auth/refresh";
-            expired = 600L; // 10분
+            expired = jwtConfig.getValidation().getRefresh(); // 10분
         }
 
         return ResponseCookie.from(key, token)

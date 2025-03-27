@@ -32,10 +32,10 @@ public class Post {
     @Setter
     private long viewCount;
 
-    @OneToMany(mappedBy = "post",  cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "post",  cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private List<Comment> comments;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private List<Likes> likes;
 
     @Builder

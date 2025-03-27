@@ -2,8 +2,10 @@ package est.wordwise.domain.chat.entity;
 
 import est.wordwise.domain.security.entity.Member;
 import jakarta.persistence.*;
+import lombok.Getter;
 
 @Entity
+@Getter
 @Table(uniqueConstraints = {
         @UniqueConstraint(columnNames = {"member_id", "chat_room_id"})
 })

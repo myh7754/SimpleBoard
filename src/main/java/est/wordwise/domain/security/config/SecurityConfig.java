@@ -37,13 +37,23 @@ public class SecurityConfig {
                                 .userInfoEndpoint(userInfo -> userInfo.userService(memberService))
                 )
                 .authorizeHttpRequests(auth-> { auth
-                        .requestMatchers("/","/oauth2/authorization/**","/api/auth/**","/api/posts/**","/ws/**").permitAll()
-                        .requestMatchers("/auth/member").hasAnyAuthority("ADMIN", "MANAGER", "MEMBER")
+                        .requestMatchers("/","/oauth2/authorization/**","/api/auth/**","/api/posts/**","/ws/**",
+                                "/image/**",
+                                "/index.html",
+                                "/static/**",    // ✅ 디렉터리 전체 허용 (끝에 ** 사용)
+                                "/assets/**",    // ✅ 디렉터리 전체 허용
+                                "/*.js",         // ✅ 루트 경로의 .js 파일 허용
+                                "/*.css",        // ✅ 루트 경로의 .css 파일 허용
+                                "/*.png",        // ✅ 루트 경로의 .png 파일 허용
+                                "/*.svg",
+                                "/favicon.ico"
+                        ).permitAll()
                         .requestMatchers(
                                 HttpMethod.GET,
                                 "/api/posts/*/comments",
                                 "/api/posts"
                         ).permitAll()
+                        .requestMatchers("/auth/member").hasAnyAuthority("ADMIN", "MANAGER", "MEMBER")
                          // reqMatchers는 허락받는 url , .permitAll은 url의 허락해줄 권한 역할
                         .anyRequest().authenticated(); // 위에서 정의되지 않은 모든 요청은 인증된 사용자만 접근 가능
                 })

@@ -19,7 +19,7 @@ public class RefreshTokenBlackList {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "refresh_token_id")
     private RefreshToken refreshToken;
 

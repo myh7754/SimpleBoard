@@ -4,6 +4,7 @@ import est.wordwise.common.exception.ChatRoomNotFoundException;
 import est.wordwise.common.exception.InvalidChatRoomCreationException;
 import est.wordwise.domain.chat.dto.ChatMessage;
 import est.wordwise.domain.chat.dto.ChatRoomRequest;
+import est.wordwise.domain.chat.dto.ChatRoomResponse;
 import est.wordwise.domain.chat.entity.Chat;
 import est.wordwise.domain.chat.entity.ChatRoom;
 import est.wordwise.domain.chat.entity.UserChatRoom;
@@ -11,11 +12,14 @@ import est.wordwise.domain.chat.repository.ChatMessageRepository;
 import est.wordwise.domain.chat.repository.ChatRoomRepository;
 import est.wordwise.domain.chat.repository.UserChatRoomRepository;
 import est.wordwise.domain.chat.service.ChatService;
+import est.wordwise.domain.security.dto.MemberDetails;
 import est.wordwise.domain.security.entity.Member;
 import est.wordwise.domain.security.service.MemberService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.*;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -41,6 +45,21 @@ public class ChatServiceImpl implements ChatService {
                 ()-> new ChatRoomNotFoundException(CHAT_ROOM_FOUND_ERROR)
         );
     }
+
+    @Override
+    public List<ChatRoomResponse> getChatRoomListByMemberId(Authentication authentication) {
+//        MemberDetails memberDetails = memberService.getMemberDetails(authentication);
+        Member loginMember = memberService.getLoginMember(authentication);
+        List<ChatRoom> chatRooms = loginMember.getChatRooms();
+        return chatRooms.stream()
+                .filter(chatRoom -> chatRoom.getLastMessage() != null)
+                .sorted((cr1, cr2) ->
+                        cr2.getLastMessage().getTimestamp().compareTo(cr1.getLastMessage().getTimestamp())
+                )
+                .map(chatRoom -> new ChatRoomResponse(chatRoom.getLastMessage()))
+                .collect(Collectors.toList());
+    }
+
     @Override
     public Slice<ChatMessage> getChatMessageByChatRoomId(Long chatRoomId, int page, int size) {
         Pageable pageRequest = PageRequest.of(page, size, Sort.by("timestamp").descending());
@@ -60,14 +79,18 @@ public class ChatServiceImpl implements ChatService {
 
     // 채팅 추가
     @Override
+    @Transactional
     public void addChatMessage(ChatMessage chatMessage, Long roomId) {
         Member memberByNickname = memberService.getMemberByNickname(chatMessage.getSender());
         ChatRoom chatRoomById = getChatRoomById(roomId);
-        chatMessageRepository.save(Chat.toEntity(chatMessage, memberByNickname, chatRoomById));
+        Chat newChat = Chat.toEntity(chatMessage, memberByNickname, chatRoomById);
+        chatRoomById.updateLastChat(newChat);
+        chatMessageRepository.save(newChat);
     }
 
     // 채팅방 생성
     @Override
+    @Transactional
     public Long createChatRoom(ChatRoomRequest chatRoomRequest) {
         if (Objects.equals(chatRoomRequest.getMemberName(), chatRoomRequest.getOpponentName())) {
             throw new InvalidChatRoomCreationException(INVALID_CHAT_ROOM_CREATION_ERROR);
@@ -93,6 +116,7 @@ public class ChatServiceImpl implements ChatService {
 
     // 멤버 추가
     @Override
+    @Transactional
     public void joinChatRoom(ChatMessage req, Long roomId) {
         ChatRoom joinRoom = getChatRoomById(roomId);
         Member joinMember = memberService.getMemberByNickname(req.getSender());
@@ -105,6 +129,7 @@ public class ChatServiceImpl implements ChatService {
 
     // 채팅방 나가기
     @Override
+    @Transactional
     public void leaveChatRoom(ChatMessage req, Long roomId) {
         ChatRoom leaveChatRoom = getChatRoomById(roomId);
         Member leaveMember = memberService.getMemberByNickname(req.getSender());

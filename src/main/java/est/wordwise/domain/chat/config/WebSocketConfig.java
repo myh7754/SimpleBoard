@@ -1,6 +1,7 @@
 package est.wordwise.domain.chat.config;
 
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
@@ -11,11 +12,13 @@ import org.springframework.web.socket.config.annotation.WebSocketTransportRegist
 @Configuration
 @EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
+    @Value("${custom.front.redirect-url}")
+    private String redirectUrl;
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/ws") // 클라이언트가 연결할 엔드포인트
-                .setAllowedOriginPatterns("*") // CORS 허용
+                .setAllowedOriginPatterns(redirectUrl) // CORS 허용
                 .withSockJS();// SockJS 사용 설정
     }
 
