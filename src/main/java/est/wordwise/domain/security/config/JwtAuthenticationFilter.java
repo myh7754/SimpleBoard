@@ -1,5 +1,6 @@
 package est.wordwise.domain.security.config;
 
+import est.wordwise.common.exception.TokenNotFoundException;
 import est.wordwise.domain.security.dto.MemberDetails;
 import est.wordwise.domain.security.dto.TokenBody;
 import est.wordwise.domain.security.service.JwtTokenProvider;
@@ -19,6 +20,8 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+import static est.wordwise.common.exception.ExceptionHandler.ACCESS_TOKEN_NOT_FOUND_ERROR;
+
 @Component
 @RequiredArgsConstructor
 @Slf4j
@@ -31,6 +34,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String token = resolveTokenFromCookie(request);
         log.info("token {}", token);
+//        if(token == null) {
+//            throw new TokenNotFoundException(ACCESS_TOKEN_NOT_FOUND_ERROR);
+//        }
+
         if (token != null && jwtTokenProvider.validateToken(token)) {
             log.info("access 토큰 쿠키 검증 성공");
             TokenBody tokenBody = jwtTokenProvider.parseJwt(token);

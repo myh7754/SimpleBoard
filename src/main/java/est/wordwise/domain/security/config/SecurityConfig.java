@@ -40,11 +40,11 @@ public class SecurityConfig {
                         .requestMatchers("/","/oauth2/authorization/**","/api/auth/**","/api/posts/**","/ws/**",
                                 "/image/**",
                                 "/index.html",
-                                "/static/**",    // ✅ 디렉터리 전체 허용 (끝에 ** 사용)
-                                "/assets/**",    // ✅ 디렉터리 전체 허용
-                                "/*.js",         // ✅ 루트 경로의 .js 파일 허용
-                                "/*.css",        // ✅ 루트 경로의 .css 파일 허용
-                                "/*.png",        // ✅ 루트 경로의 .png 파일 허용
+                                "/static/**",
+                                "/assets/**",
+                                "/*.js",
+                                "/*.css",
+                                "/*.png",
                                 "/*.svg",
                                 "/favicon.ico"
                         ).permitAll()

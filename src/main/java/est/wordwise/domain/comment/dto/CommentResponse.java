@@ -19,7 +19,7 @@ public class CommentResponse {
         this.id = comments.getId();
         this.content = comments.getContent();
         this.author = comments.getMember().getNickname();
-        this.createTime = comments.getCreateDate();
+        this.createTime = comments.getCreateAt();
         this.children = comments.getChildren().stream()
                 .map(CommentResponse::new)
                 .collect(Collectors.toList());

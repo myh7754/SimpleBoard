@@ -25,7 +25,7 @@ public class Comment {
 
     private String content;
 
-    private LocalDateTime createDate;
+    private LocalDateTime createAt;
 
     // 부모 댓글
     @ManyToOne(fetch = FetchType.LAZY)
@@ -54,7 +54,7 @@ public class Comment {
 
     public static Comment toEntity(String conent, Member member, Post post, Comment parent) {
         Comment comments = new Comment(conent, member, post,parent);
-        comments.createDate = LocalDateTime.now();
+        comments.createAt = LocalDateTime.now();
         return comments;
     }
 

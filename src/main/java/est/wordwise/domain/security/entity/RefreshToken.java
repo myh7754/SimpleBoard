@@ -21,7 +21,7 @@ public class RefreshToken {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    private LocalDateTime createTime;
+    private LocalDateTime create_at;
 
     @Builder
     public RefreshToken(String refreshToken, Member member) {
