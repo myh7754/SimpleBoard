@@ -65,14 +65,14 @@ public class MemberService extends DefaultOAuth2UserService {
         String provider = userRequest.getClientRegistration().getRegistrationId().toUpperCase();
 
         MemberDetails memberDetails = MemberDetailsFactory.create(provider, oAuth2User);
-
+        log.info("memberDetails : {}", memberDetails.toString());
         Optional<Member> memberOptional = memberRepository.findByEmail(memberDetails.getEmail());
         Member findMember = memberOptional.orElseGet(
                 () -> {
                     Member member = Member.builder()
                             .email(memberDetails.getEmail())
                             .nickname(memberDetails.getName())
-                            .nickname("OAUTHUSER")
+                            .nickname(memberDetails.getEmail())
                             .provider(provider)
                             .build();
                     return memberRepository.save(member);

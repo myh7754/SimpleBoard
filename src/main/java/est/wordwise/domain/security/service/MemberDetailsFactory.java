@@ -9,7 +9,10 @@ import java.util.Map;
 @Slf4j
 public class MemberDetailsFactory {
     public static MemberDetails create(String provider, OAuth2User oauth2User) {
+        log.info("oauth2User {}",oauth2User);
+
         Map<String, Object> attributes = oauth2User.getAttributes();
+        log.info("attributes {}",attributes);
         switch (provider) {
             case "GOOGLE" -> {
                 return MemberDetails.builder()
@@ -20,6 +23,7 @@ public class MemberDetailsFactory {
             }
             case "KAKAO" -> {
                 Map<String, String> properties = (Map<String, String>) attributes.get("properties");
+                log.info("properties : {}", properties);
                 return MemberDetails.builder()
                         .name(properties.get("nickname"))
                         .email(attributes.get("id").toString() + "@kakao.com")

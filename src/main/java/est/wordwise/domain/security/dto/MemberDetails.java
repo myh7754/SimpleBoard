@@ -14,6 +14,7 @@ import java.util.Map;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Slf4j
+@ToString
 public class MemberDetails implements OAuth2User {
     @Setter
     private Long id;
