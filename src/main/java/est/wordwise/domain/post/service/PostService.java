@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
 
 public interface PostService {
+    public Post getPostByIdWithMember(Long postId);
     public Post getPostById(Long postId);
     public PostResponse readPost(Long postId);
     public Page<PostsResponse> readPosts(int page, int size);

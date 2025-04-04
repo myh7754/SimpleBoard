@@ -36,8 +36,9 @@ public class SecurityConfig {
                                 .successHandler(successHandler)
                                 .userInfoEndpoint(userInfo -> userInfo.userService(memberService))
                 )
-                .authorizeHttpRequests(auth-> { auth
-                        .requestMatchers("/","/oauth2/authorization/**","/api/auth/**","/api/posts/**","/ws/**",
+                .authorizeHttpRequests(auth-> {
+                    auth
+                        .requestMatchers("/","/oauth2/authorization/**","/api/auth/**","/ws/**",
                                 "/image/**",
                                 "/index.html",
                                 "/static/**",
@@ -46,12 +47,13 @@ public class SecurityConfig {
                                 "/*.css",
                                 "/*.png",
                                 "/*.svg",
-                                "/favicon.ico"
+                                "/favicon.ico",
+                                "/posts/**"
                         ).permitAll()
                         .requestMatchers(
                                 HttpMethod.GET,
                                 "/api/posts/*/comments",
-                                "/api/posts"
+                                "/api/posts/**"
                         ).permitAll()
                         .requestMatchers("/auth/member").hasAnyAuthority("ADMIN", "MANAGER", "MEMBER")
                          // reqMatchers는 허락받는 url , .permitAll은 url의 허락해줄 권한 역할

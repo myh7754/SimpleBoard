@@ -37,6 +37,7 @@ public class PostController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10")int size
     ) {
+        log.info("포스트 요청 들어옴{}",page);
         Page<PostsResponse> responseEntity = postService.readPosts(page, size);
         return ResponseEntity.ok(responseEntity);
     }

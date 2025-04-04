@@ -1,5 +1,6 @@
 package est.wordwise.domain.post.service.impl;
 
+import est.wordwise.domain.likes.repository.LikesRepository;
 import est.wordwise.domain.security.entity.Member;
 import est.wordwise.domain.post.entity.Post;
 import est.wordwise.common.exception.PostNotFoundException;
@@ -8,6 +9,7 @@ import est.wordwise.domain.post.repository.PostRepository;
 import est.wordwise.domain.post.service.PostService;
 import est.wordwise.domain.security.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -19,11 +21,21 @@ import static est.wordwise.common.exception.ExceptionHandler.POST_NOT_FOUND_ERRO
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
     private final MemberService memberService;
+    private final LikesRepository likesRepository;
+
 
     @Override
+    public Post getPostByIdWithMember(Long postId) {
+        return postRepository.findByIdWithAuthor(postId)
+                .orElseThrow(() -> new PostNotFoundException(POST_NOT_FOUND_ERROR));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public Post getPostById(Long postId) {
         Post findPost = postRepository.findById(postId).orElseThrow(
                 () -> new PostNotFoundException(POST_NOT_FOUND_ERROR)
@@ -32,10 +44,13 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public PostResponse readPost(Long postId) {
-        Post postById = getPostById(postId);
-        PostResponse from = PostResponse.from(postById);
-        return from;
+//        Post postById = getPostById(postId);
+        Post postById = getPostByIdWithMember(postId);
+
+        Long likeCount = likesRepository.countByPostId(postId);
+        return PostResponse.from(postById, likeCount);
     }
 
     @Override

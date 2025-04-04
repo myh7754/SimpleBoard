@@ -56,9 +56,9 @@ public class JwtTokenProvider {
 
         return ResponseCookie.from(key, token)
                 .httpOnly(true)
-                .secure(false)
+                .secure(true)
                 .path(path)
-                .sameSite("Lax")
+                .sameSite("Strict")
                 .maxAge(expired)
                 .build();
     }
