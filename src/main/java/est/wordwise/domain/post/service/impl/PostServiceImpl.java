@@ -29,8 +29,8 @@ public class PostServiceImpl implements PostService {
 
 
     @Override
-    public Post getPostByIdWithMember(Long postId) {
-        return postRepository.findByIdWithAuthor(postId)
+    public PostResponse getPostByIdWithMember(Long postId) {
+        return postRepository.findPostWithLikeCount(postId)
                 .orElseThrow(() -> new PostNotFoundException(POST_NOT_FOUND_ERROR));
     }
 
@@ -47,10 +47,11 @@ public class PostServiceImpl implements PostService {
     @Transactional(readOnly = true)
     public PostResponse readPost(Long postId) {
 //        Post postById = getPostById(postId);
-        Post postById = getPostByIdWithMember(postId);
-
-        Long likeCount = likesRepository.countByPostId(postId);
-        return PostResponse.from(postById, likeCount);
+        PostResponse postViewData = getPostByIdWithMember(postId);
+//        Post postById = postViewData.getPost();
+//        Long likeCount = postViewData.getLikeCount();
+//        String author = postViewData.getAuthorNickname();
+        return null;
     }
 
     @Override

@@ -20,6 +20,7 @@ public record PostsResponse(
                 post.getContent(),
                 post.getAuthor().getNickname(),
                 post.getCreateAt(),
+
                 post.getCommentCount(),
                 post.getLikeCount()
         );

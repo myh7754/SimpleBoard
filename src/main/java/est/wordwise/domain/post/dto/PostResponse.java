@@ -16,17 +16,15 @@ public class PostResponse {
     public String content;
     public LocalDateTime createAt;
     public String board;
-    public List<CommentResponse> comments;
     public Long likeCount;
 
-
-    public static PostResponse from(Post post, Long likeCount) {
-        PostResponse postResponse = new PostResponse();
-        postResponse.title = post.getTitle();
-        postResponse.content = post.getContent();
-        postResponse.createAt = post.getCreateAt();
-        postResponse.author = post.getAuthor().getNickname();
-        postResponse.likeCount = likeCount;
-        return postResponse;
+    public PostResponse(String title, String author, String content,
+                        LocalDateTime createAt, Long likeCount) {
+        this.title = title;
+        this.author = author;
+        this.content = content;
+        this.createAt = createAt;
+        this.likeCount = likeCount;
     }
+
 }

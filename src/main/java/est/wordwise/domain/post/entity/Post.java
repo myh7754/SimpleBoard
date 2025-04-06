@@ -6,10 +6,7 @@ import est.wordwise.domain.post.dto.CreatePostRequest;
 import est.wordwise.domain.post.dto.UpdatePostRequest;
 import est.wordwise.domain.security.entity.Member;
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
