@@ -14,6 +14,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor
+@Table
 public class Post {
     @Id
     @Column(name = "post_id")
@@ -27,7 +28,7 @@ public class Post {
     private LocalDateTime createAt;
 
     @Setter
-    private long viewCount;
+    private long likeCount;
 
     @OneToMany(mappedBy = "post",  cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private List<Comment> comments;
@@ -41,7 +42,7 @@ public class Post {
         this.content = content;
         this.author = author;
         this.createAt = LocalDateTime.now();
-        this.viewCount = 0;
+        this.likeCount = 0;
     }
 
     public static Post toEntity(CreatePostRequest create, Member author) {
@@ -52,14 +53,12 @@ public class Post {
                 .build();
     }
 
-    public long getCommentCount() {
-        return comments.size();
+    public void addLike() {
+        this.likeCount++;
     }
-
-    public long getLikeCount() {
-        return likes.size();
+    public void removeLike() {
+        this.likeCount--;
     }
-
     public void update(UpdatePostRequest update) {
         this.content = update.getContent();
         this.title = update.getTitle();

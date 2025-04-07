@@ -10,6 +10,11 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(
+        name = "likes",
+        indexes = {
+                @Index(name = "idx_post_id", columnList = "post_id")
+        })
 public class Likes {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
