@@ -2,7 +2,7 @@
 
 --- 
 ## 가장 기본적인 게시판 기능을 구현 하였습니다.
-접속 도메인 주소 : http://ec2-43-202-193-230.ap-northeast-2.compute.amazonaws.com:8080/
+접속 도메인 주소 : http://ec2-43-202-193-230.ap-northeast-2.compute.amazonaws.com:3000/
 
 ## 주요 기능
 - 게시글 생성, 수정 및 삭제
