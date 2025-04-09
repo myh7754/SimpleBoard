@@ -16,8 +16,8 @@
 ## 사용 기술 스택  
 - **프론트엔드** : React.js, Daisy UI, Tailwind css
 - **백엔드** : Spring Boot, Spring Security, JPA, WebSocket
-- **DB** : MySQL
-- **배포** : AWS EC2, AWS RDS
+- **DB** : MySQL,AWS RDS
+- **배포** : AWS EC2, Nginx, Docker
 ## 도메인 및 API 명세  
 # API 명세
 
@@ -64,7 +64,7 @@
 | WEBSOCKET    | /pub/{chatRoomId}             | 채팅방으로 채팅 발행  |
 
 ## 프로젝트 개발 일정  
-02.27 ~ 03.31
+02.27 ~ 
 ## ERD  
 https://www.erdcloud.com/d/qkpus97pCBTs9jJoB
 ![DeboardERD](https://github.com/user-attachments/assets/714e63cf-6bcd-4dfe-8bd3-8bdb46112f25)
