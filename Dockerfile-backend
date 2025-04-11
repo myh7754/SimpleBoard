@@ -1,0 +1,24 @@
+# Stage 1: Build with Gradle
+FROM gradle:8-jdk21-alpine AS builder
+
+WORKDIR /build
+
+# 의존성 캐시 레이어
+COPY build.gradle settings.gradle gradlew ./
+COPY gradle gradle
+RUN ./gradlew dependencies --no-daemon
+
+# 소스 코드 복사 및 빌드
+COPY src ./src
+RUN ./gradlew clean build --no-daemon -x test
+
+FROM openjdk:21-slim
+
+WORKDIR /app
+
+COPY --from=builder /build/build/libs/*.jar app.jar
+
+EXPOSE 8080
+
+# 메모리 설정 추가 (필요시)
+ENTRYPOINT ["java", "-jar", "app.jar"]

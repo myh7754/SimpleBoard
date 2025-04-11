@@ -10,5 +10,4 @@ public class WordWiseApplication {
     public static void main(String[] args) {
         SpringApplication.run(WordWiseApplication.class, args);
     }
-
 }

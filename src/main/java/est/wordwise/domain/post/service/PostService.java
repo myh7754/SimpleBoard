@@ -13,6 +13,6 @@ public interface PostService {
     public void save(CreatePostRequest post, Authentication authentication);
     public void update(Long id, UpdatePostRequest post);
     public void delete(Long postId);
-    public void increaseViewCount(Long postId);
+//    public void increaseViewCount(Long postId);
 
 }

@@ -51,7 +51,7 @@ public class PostServiceImpl implements PostService {
 //        Post postById = postViewData.getPost();
 //        Long likeCount = postViewData.getLikeCount();
 //        String author = postViewData.getAuthorNickname();
-        return null;
+        return postViewData;
     }
 
     @Override
@@ -83,11 +83,11 @@ public class PostServiceImpl implements PostService {
         });
     }
 
-    @Override
-    @Transactional
-    public void increaseViewCount(Long postId) {
-        postRepository.findById(postId).ifPresent(post -> {
-            post.setViewCount(post.getViewCount() + 1);
-        });
-    }
+//    @Override
+//    @Transactional
+//    public void increaseViewCount(Long postId) {
+//        postRepository.findById(postId).ifPresent(post -> {
+//            post.setViewCount(post.getViewCount() + 1);
+//        });
+//    }
 }
