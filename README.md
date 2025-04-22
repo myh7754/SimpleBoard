@@ -69,3 +69,9 @@
 https://www.erdcloud.com/d/qkpus97pCBTs9jJoB
 ![DeboardERD](https://github.com/user-attachments/assets/714e63cf-6bcd-4dfe-8bd3-8bdb46112f25)
 
+## 아키텍쳐
+![아키텍쳐](https://github.com/user-attachments/assets/34433bd0-3c8b-477c-892e-3debe0d61b01)
+
+
+
+
