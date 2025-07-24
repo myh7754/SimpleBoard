@@ -11,7 +11,8 @@
 7. 아키텍쳐
 
 ## 사이트 도메인 주소
-DeBoard는 다음 링크에서 확인하실 수 있습니다: [ec2-13-125-236-0.ap-northeast-2.compute.amazonaws.com](http://ec2-13-125-236-0.ap-northeast-2.compute.amazonaws.com)
+DeBoard는 다음 링크에서 확인하실 수 있습니다: [ec2-43-200-172-48.ap-northeast-2.compute.amazonaws.com](ec2-43-200-172-48.ap-northeast-2.compute.amazonaws.com)
+
 
 ## 주요 기능
 - 게시글 생성, 수정 및 삭제
